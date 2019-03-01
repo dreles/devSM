@@ -1,18 +1,20 @@
 {
   "name": "mern",
   "version": "1.0.0",
-  "description": "Social Network fot developers ",
+  "description": "Social Network for developers ",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node start.js",
     "server": "nodemon server.js"
   },
   "author": "Andre Leslie",
   "license": "MIT",
   "dependencies": {
+    "bcrypt": "^3.0.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
+    "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.4.13",
     "passport": "^0.4.0",
@@ -20,6 +22,8 @@
     "validator": "^10.11.0"
   },
   "devDependencies": {
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
     "nodemon": "^1.18.10"
   }
 }

@@ -1,8 +1,9 @@
-const express = require('express');
-const mongoose = require('mongoose');
-const users = require('./routes/api/users.js');
-const profiles = require('./routes/api/profiles.js');
-const posts = require('./routes/api/posts.js');
+import express from 'express'
+import bodyParser from 'body-parser'
+import mongoose from 'mongoose'
+import users from './routes/api/users.js'
+import profiles from './routes/api/profiles.js'
+import posts from './routes/api/posts.js'
 
 
 const app = express(); 
@@ -12,6 +13,10 @@ const db = require('./config/keys.js').mongoURI;
 //Connect to DB
 mongoose.connect(db).then(() => {console.log("connected to MONGODB")}).catch(err => console.log(err))
 //use routes
+
+app.use(bodyParser.urlencoded({ extended: false })) 
+app.use(bodyParser.json())  
+
 app.use('/api/users', users);
 app.use('/api/profiles', profiles);
 app.use('/api/posts', posts); 

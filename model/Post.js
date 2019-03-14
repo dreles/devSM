@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
-Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-postSchema = new Schema({
+const postSchema = new Schema({
 	user: {
-		type: Schema.types.ObjectId,
+		type: Schema.Types.ObjectId,
 		ref: 'users'
 	},
 	text: {
@@ -19,13 +19,13 @@ postSchema = new Schema({
 	},
 	likes: [{
 		user: {
-			type: Schema.types.ObjectId,
+			type: Schema.Types.ObjectId,
 			ref: 'users'
 		}
 	}],
 	comments: [{
 		users: {
-			type: Schema.types.ObjectId,
+			type: Schema.Types.ObjectId,
 			ref: 'users'
 		},
 		text: {
@@ -40,12 +40,12 @@ postSchema = new Schema({
 		},
 		date: {
 			type: Date,
-			default: Data.now
+			default: Date.now
 		}
 	}],
-	data: {
+	date: {
 		type: Date,
-		default: Data.now
+		default: Date.now
 	}
 
 }) 

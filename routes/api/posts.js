@@ -44,7 +44,7 @@ router.get('/:id', (req, res) => {
 })
 
 //route: 	localhost/api/post
-//desc: 	create a post 
+//desc: 	delete a post 
 //access: 	private 
 router.delete('/:id', passport.authenticate('jwt', {session: false}),(req, res) => {
 	Post.findById(req.params.id).then((post)=>{
@@ -54,5 +54,67 @@ router.delete('/:id', passport.authenticate('jwt', {session: false}),(req, res) 
 		post.remove().then(res.json({status: 'success'}))
 	})
 })
+
+router.post('/like/:id', passport.authenticate('jwt', {session: false}), (req,res) => {
+	const userId = req.user.id
+	let isUnlike = false 
+	let isFirstLike = false 
+
+	Post.findById(req.params.id).then((post) => {
+
+		if(post.likes.length === 0 ){
+			post.likes.push({user: userId}); 
+			isFirstLike = true
+		}
+		
+		for(let i = 0; i < post.likes.length ; i++){
+			if(isFirstLike){
+				break
+			}
+			if(post.likes[i].user.toString() === userId){
+				post.likes.splice(i, 1); 
+				isUnlike = true 
+			}else{
+				if(isUnlike === false && i === post.likes.length - 1){
+					post.likes.push({user: userId}) 
+				}
+			}
+		}
+
+	post.save().then(res.json(post))
+	})
+})
+
+router.post('/comment/:id', passport.authenticate('jwt', {session: false}), (req, res) => {
+	Post.findById(req.params.id).then(post => {
+
+		const comments = {
+			user: req.user.id,
+			text: req.body.text,
+			name: req.body.name,
+			avatar: req.body.avatar
+		}
+		
+		post.comments.unshift(comments)
+		post.save().then(res.json(post))
+	})
+})
+
+router.delete('/comment/:id/:comment_id', passport.authenticate('jwt', {session: false}), (req, res) => {
+	Post.findById(req.params.id).then(post => {
+		
+		for(let i = 0; i < post.comments.length ; i++){
+			
+			if(post.comments[i]._id == req.params.comment_id){
+				console.log('we made it')
+				post.comments.splice(i, 1); 
+			}
+		}
+
+		post.save().then(res.json(post))
+	})
+})
+
+
 
 module.exports = router

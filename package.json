@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node start.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client-install": "npm install --prefix client",
+    "dev": "concurrently \" npm start \" \" npm start --prefix client\"" 
   },
   "author": "Andre Leslie",
   "license": "MIT",
@@ -13,6 +15,7 @@
     "bcrypt": "^3.0.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
+    "concurrently": "^4.1.0",
     "express": "^4.16.4",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.0",
